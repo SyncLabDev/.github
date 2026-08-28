@@ -1,0 +1,127 @@
+name: Bug Report
+description: Report a reproducible issue with a SYNC Lab resource.
+title: "[BUG] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug.
+
+        Before submitting, please make sure:
+        - You are using a supported version of the resource.
+        - You have checked the available documentation.
+        - You have searched existing issues.
+        - The problem is reproducible.
+
+  - type: input
+    id: resource
+    attributes:
+      label: Resource
+      description: Which SYNC Lab resource is affected?
+      placeholder: sync-notify
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Resource Version
+      description: Which version of the resource are you using?
+      placeholder: v1.0.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Framework
+      description: Which framework are you using?
+      options:
+        - Qbox
+        - QBCore
+        - ESX
+        - Standalone
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: framework_version
+    attributes:
+      label: Framework Version
+      description: Enter your framework version if applicable.
+      placeholder: Version or commit
+
+  - type: input
+    id: artifacts
+    attributes:
+      label: FiveM Artifact Version
+      description: Enter the FiveM artifact/build version used by the server.
+      placeholder: Artifact version
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem Description
+      description: Clearly explain what is happening.
+      placeholder: Describe the issue in detail.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: Explain what you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Provide the exact steps required to reproduce the issue.
+      placeholder: |
+        1. Start the resource
+        2. Perform the action
+        3. Observe the issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: errors
+    attributes:
+      label: Console Errors
+      description: Paste relevant client, server, or NUI console errors here.
+      render: shell
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Relevant Configuration
+      description: |
+        Include only configuration relevant to the issue.
+        Remove passwords, tokens, webhooks, API keys, and other secrets.
+      render: lua
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description: Add screenshots, videos, logs, or other useful information.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I am using a supported version of the resource.
+          required: true
+        - label: I searched existing issues before creating this report.
+          required: true
+        - label: I removed passwords, tokens, webhooks, and other sensitive information.
+          required: true
+        - label: I can reproduce this issue consistently.
+          required: true
