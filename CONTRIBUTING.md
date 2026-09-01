@@ -1,271 +1,349 @@
 # Contributing to SYNC Lab
 
-Thank you for your interest in contributing to SYNC Lab.
-
-SYNC Lab projects prioritize reliability, maintainability, security, performance, and consistent user experience.
-
----
-
-## Development Principles
-
-Contributions should aim for:
-
-- Clear and maintainable code
-- Modular architecture
-- Secure server-side validation
-- Minimal unnecessary resource usage
-- Predictable APIs
-- Good documentation
-- Consistent naming
-- Backwards compatibility where reasonable
-- Production-ready behavior
-
-Avoid unnecessary complexity.
+SYNC Lab projects prioritize security, performance, reliability, and maintainable architecture.
+Contributions should reflect those values.
 
 ---
 
-## Branching Workflow
+## Engineering Philosophy
 
-Recommended branches:
+### Independent resources
 
-```text
-main
-develop
-feature/*
-fix/*
-perf/*
-refactor/*
+Each SYNC product is independently installable. Do not architect contributions around a mandatory shared core.
+
+Every product owns:
+- its configuration and validation
+- its adapter contracts
+- its diagnostics
+- its locale handling
+- its failure handling
+
+### Adapter contracts over direct calls
+
+Business logic must not call optional third-party resources directly.
+
+```
+SYNC business logic
+        ↓
+Capability contract  (e.g. SYNC.Inventory)
+        ↓
+Integration resolver
+        ↓
+Adapter
+        ↓
+Third-party resource
 ```
 
-Examples:
+Never scatter direct calls to `ox_inventory`, `ox_target`, or similar resources throughout gameplay code.
 
-```text
-feature/custom-notification-theme
-feature/qbox-support
-fix/notification-queue
-fix/nui-focus
-perf/client-thread-optimization
-refactor/framework-adapter
+### Fail gracefully
+
+Optional integration failures must not crash or disable unrelated functionality.
+
+---
+
+## Branching
+
+```
+main          — production
+feature/*     — new functionality
+fix/*         — bug fixes
+refactor/*    — code restructuring
+perf/*        — performance work
+docs/*        — documentation only
+security/*    — security fixes
 ```
 
-Do not commit unfinished experimental work directly to `main`.
+**Do not use permanent branches** such as `dev`, `develop`, `staging`, `beta`, or `release` unless the workflow genuinely requires them.
 
 ---
 
 ## Commit Messages
 
-Use clear Conventional Commit-style prefixes:
+Use Conventional Commits:
 
-```text
+```
 feat:
 fix:
-perf:
 refactor:
+perf:
 docs:
-style:
-test:
-build:
-ci:
+security:
 chore:
 ```
 
-Examples:
+With optional scope:
 
-```text
-feat: add configurable notification positions
-fix: release NUI focus when menu closes
-perf: remove unnecessary client polling
-refactor: move framework detection into bridge
-docs: add qbox installation instructions
 ```
+feat(target): add ox_target adapter
+fix(reports): prevent duplicate case claim on reconnect
+perf(safezones): reduce idle proximity check interval
+security(employment): validate ownership server-side before mutation
+docs(notify): document locale override system
+refactor(framework): isolate detection into bridge module
+```
+
+Keep commit messages factual. No `fix`, `oops`, `maybe fixed`, `real final`.
+
+---
+
+## Merge Policy
+
+Use **squash and merge** for feature and fix branches.
+
+Main branch history must remain readable. Do not preserve intermediate work-in-progress commits.
 
 ---
 
 ## Lua Guidelines
 
-Lua code should be:
-
-- Modular
-- Readable
-- Properly scoped
-- Event-driven where possible
-- Secure
-- Configuration-driven where appropriate
+```lua
+-- Preferred
+RegisterNetEvent('sync_resource:server:action', function(payload)
+    local src = source
+    -- validate every field before use
+    -- never trust client-provided state, ownership, or permission claims
+end)
+```
 
 Avoid:
-
-- Unnecessary `while true` loops
-- Permanent `Wait(0)` loops without justification
-- Excessive polling
-- Global variables without reason
-- Duplicate framework logic
+- Permanent `Wait(0)` threads outside frame-sensitive operations
+- Polling when events would suffice
+- Global variables without explicit reason
+- Framework detection outside the bridge module
 - Large monolithic files
-- Client-trusted sensitive operations
+
+Performance targets:
+
+| State | Target |
+|---|---|
+| Fully idle | ~0.00–0.02 ms |
+| Light passive monitoring | ~0.01–0.05 ms |
+| Normal active | < 0.10 ms |
+| Complex temporary state | < 0.20–0.30 ms |
+| Persistent > 0.5 ms | Investigate |
+| Persistent > 1.0 ms | Normally unacceptable |
 
 ---
 
-## FiveM Security
+## Configuration Validation
 
-The core security principle is:
+Every product validates its configuration at startup without requiring a shared core.
+
+Validate:
+- missing required settings
+- invalid types
+- unsupported enum values
+- impossible numeric ranges
+- malformed integration values
+- unsupported framework values
+- deprecated settings
+
+Errors must be actionable:
+
+```
+[SYNC Resource] Configuration validation failed
+
+Setting:  Config.Framework
+Value:    qbx
+Expected: qbox | qbcore | esx | standalone
+
+Action:   Change Config.Framework to a supported value.
+```
+
+Do not emit a bare `attempt to index nil` and leave users to guess the cause.
+
+---
+
+## Diagnostics
+
+Separate audit logging from developer debugging.
+
+Default startup output must be a compact health summary:
+
+```
+SYNC Resource 1.0.0
+
+Config        OK
+Database      OK
+Framework     Qbox
+Integrations  3 ready
+Locale        en
+
+Ready
+```
+
+Do not spam individual loading lines unless `Config.Debug` granular categories are enabled.
+
+Support per-category debug flags. Do not create a single global debug toggle that floods every subsystem.
+
+---
+
+## Locale Standard
+
+English (`locales/en.lua`) is mandatory and canonical.
+
+Resolution order:
+1. Custom override
+2. Selected locale
+3. English fallback
+4. `[missing.key]` — never a crash
+
+Use stable dot-notation keys:
+
+```
+reports.create.title
+reports.errors.cooldown
+staff.case.assigned
+```
+
+Use named placeholders:
+
+```lua
+Welcome %{player}   -- preferred
+Welcome %s          -- avoid
+```
+
+Missing translation keys must never crash gameplay.
+
+---
+
+## Security
+
+### Core principle
 
 > **Never trust the client.**
 
-Sensitive operations must be validated on the server.
+Clients submit intent. The server verifies, decides, and mutates.
 
-Examples include:
+Treat as untrusted on the server:
+- client Lua execution
+- NUI callbacks and JavaScript
+- network event payloads
+- client-reported coordinates, prices, amounts, permissions, IDs, ownership
 
-- Money changes
-- Inventory changes
-- Item rewards
-- Job permissions
-- Administrative actions
-- Vehicle ownership
-- Database mutations
-- Player permissions
-- Progress or reward completion
-- Protected interactions
+### Every sensitive network event must validate
 
-Validate where appropriate:
+```lua
+-- Bad
+RegisterNetEvent('sync_resource:claimReward', function(rewardId, amount)
+    -- using client-provided amount directly
+    GiveItem(source, 'cash', amount)
+end)
 
-- Player identity
-- Permissions
-- Input types
-- Input ranges
-- Entity ownership
-- Distance
-- Player state
-- Job state
-- Resource state
-- Cooldowns
-- Rate limits
+-- Good
+RegisterNetEvent('sync_resource:claimReward', function(rewardId)
+    local src = source
+    local reward = Config.Rewards[rewardId]
+    if not reward then return end
+    if not HasPermission(src, 'claim') then return end
+    if IsOnCooldown(src, 'claimReward') then return end
+    GiveItem(src, reward.item, reward.amount)
+end)
+```
 
-Never assume an event is safe because the normal UI only sends valid data.
+Validate for every exposed event:
+- type, length, range, enum, table size, nested depth, allowed values
 
----
+Use parameterized queries. Never concatenate untrusted values into SQL.
 
-## Network Events
+### Rate limits and cooldowns
 
-Network events must be reviewed for abuse possibilities.
+- **Rate limit** — protects infrastructure from abuse
+- **Cooldown** — enforces gameplay rules
 
-Server handlers should validate sensitive input before acting on it.
+Do not ban immediately on a single rate-limit hit. Reject → count → aggregate → enforce based on policy.
 
-Avoid accepting client-provided:
+### Distance validation
 
-- Prices
-- Reward amounts
-- Permission levels
-- Arbitrary item names
-- Arbitrary player IDs
-- Arbitrary database values
+Physical interactions validate server-side distance using trusted config coordinates.
 
-unless the server independently validates them.
+```lua
+-- Client sends intent
+TriggerServerEvent('sync_resource:useShop', shopId)
 
----
+-- Server resolves trusted coordinates from config — never from client
+local shop = Config.Shops[shopId]
+if not shop then return end
+local playerCoords = GetEntityCoords(GetPlayerPed(source))
+if #(playerCoords - shop.coords) > shop.radius then return end
+```
 
-## NUI Development
+### NUI security
 
-SYNC Lab NUI projects generally use:
+NUI is never authoritative. Ignore authority fields sent by NUI:
 
-- React
-- TypeScript
-- Vite
+```
+isAdmin, owner, price, allowed, grade
+```
 
-NUI contributions should prioritize:
-
-- FiveM CEF compatibility
-- Low runtime overhead
-- Correct NUI focus handling
-- Responsive layouts
-- Accessible interactions
-- Predictable state management
-- Restrained animations
-- Clean component architecture
-- Minimal unnecessary re-renders
-- Minimal unnecessary dependencies
-
-Avoid excessive visual effects that reduce readability or CEF performance.
-
-Always verify that NUI focus is properly released when the interface closes.
+Server derives those independently from trusted state.
 
 ---
 
 ## Framework Compatibility
 
-Framework-specific logic should be isolated where practical.
+Isolate framework-specific logic in a bridge directory:
 
-Preferred architecture:
-
-```text
-bridge/
-├── qbox/
-├── qbcore/
-├── esx/
-└── standalone/
+```
+integrations/
+├── framework/
+│   ├── qbox.lua
+│   ├── qbcore.lua
+│   ├── esx.lua
+│   └── standalone.lua
 ```
 
-Avoid spreading framework detection throughout unrelated files.
+Keep core business logic framework-independent.
 
-Keep core business logic framework-independent where reasonably practical.
+---
+
+## Optional Integration Policy
+
+Optional integrations use `auto | none | <explicit> | custom` configuration.
+
+Auto-detection must:
+1. Inspect supported resources
+2. Resolve by documented priority
+3. Detect and warn on ambiguity
+4. Load only the selected adapter
+5. Report useful diagnostics
+6. Recover from dependency restart where appropriate
+
+Do not silently pick unpredictably when multiple compatible providers exist.
 
 ---
 
 ## Pull Requests
 
-Every pull request should explain:
-
-- What changed
-- Why it changed
-- How it was tested
-- Performance impact
+Every PR must explain:
+- What changed and why
+- How it was tested (frameworks, scenarios)
 - Security implications
+- Performance impact
 - Breaking changes
+- Configuration or database changes
 
-Visual changes should include screenshots or videos where useful.
-
----
-
-## Bug Reports
-
-Before submitting a bug report:
-
-1. Update to a supported version.
-2. Read available documentation.
-3. Search existing issues.
-4. Reproduce the problem.
-5. Check the client console.
-6. Check the server console.
-7. Collect relevant logs.
-
-Never publish:
-
-- Passwords
-- API keys
-- Tokens
-- Discord webhooks
-- Database credentials
-- License keys
-- Private server credentials
+Visual or NUI changes require screenshots or a short video.
 
 ---
 
-## Code Review
+## Code Review Standards
 
 A contribution may be rejected if it:
-
 - Introduces a security risk
-- Causes unnecessary performance degradation
-- Breaks compatibility without justification
-- Duplicates existing functionality
+- Causes unjustified performance degradation
+- Breaks compatibility without documented reason
 - Adds unnecessary dependencies
-- Does not follow project architecture
-- Is insufficiently tested
+- Ignores the adapter contract pattern
 - Contains debug-only code
-- Reduces maintainability
+- Reduces diagnostic quality
+- Does not follow project architecture
 
 ---
 
 ## Licensing
 
-By contributing code to an open-source SYNC Lab repository, you agree that your contribution may be distributed under that repository's existing license.
+By contributing to a public SYNC Lab repository, you agree your contribution may be distributed under that repository's existing license.
 
-Commercial or private SYNC Lab repositories may use separate contribution and licensing requirements.
+Private or commercial repositories use separate contribution and licensing requirements.

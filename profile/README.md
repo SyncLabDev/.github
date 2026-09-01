@@ -2,127 +2,68 @@
 
 # SYNC Lab
 
-### Performance-driven FiveM resources with refined UI/UX.
+Production-grade FiveM resources built around clean UX, modular architecture,<br>
+server authority, optional integrations, and reliable releases.
 
-Building reliable, optimized, and thoughtfully designed resources for modern FiveM servers.
+[Store](https://store.synclab.dev) &nbsp;·&nbsp; [Documentation](https://docs.synclab.dev) &nbsp;·&nbsp; [Support](https://discord.gg/Txj8xmCn7R)
 
 </div>
 
 ---
 
-## About SYNC Lab
+## Products
 
-SYNC Lab develops high-quality FiveM resources with a strong focus on:
+SYNC Lab develops free and paid FiveM resources distributed through official channels.
 
-- Performance
-- Clean UI/UX
-- Reliability
-- Security
-- Maintainable architecture
-- Developer experience
-- Framework compatibility
-
-Our goal is to build resources that are easy to configure, easy to integrate, and dependable in production environments.
+Each product is independently installable. There is no mandatory shared core that everything depends on.
 
 ---
 
-## Ecosystem
+## Engineering Principles
 
-Our ecosystem includes free and premium FiveM resources such as:
-
-- UI components
-- Notification systems
-- Text UI systems
-- Gameplay systems
-- Administration tools
-- Framework utilities
-- Developer libraries
-- Server management systems
-
-More resources are currently in development.
+- **Server-authoritative** — clients submit intent; the server verifies, decides, and mutates
+- **Modular architecture** — products own their configuration, validation, adapters, and diagnostics
+- **Optional integrations** — third-party resources are adapters, not hard dependencies
+- **Performance-conscious** — measurable idle and active budgets per resource
+- **Secure network boundaries** — untrusted client data is always validated server-side
+- **Event-driven systems** — state changes propagate through events, not polling
+- **Versioned releases** — semantic versioning, immutable Git tags, changelog per release
+- **Useful diagnostics** — compact health summary at startup, quiet when healthy, actionable on failure
 
 ---
 
-## Framework Support
+## Supported Ecosystem
 
-Depending on the resource, SYNC Lab products may support:
+| Category | Supported |
+|---|---|
+| Frameworks | Qbox · QBCore · ESX · Standalone (per resource) |
+| UI | React · TypeScript · FiveM NUI |
+| Database | oxmysql |
+| Optional integrations | ox_lib · ox_inventory · ox_target · pma-voice · and others (per resource) |
 
-- Qbox
-- QBCore
-- ESX
-- Standalone
-
-Check the individual repository or documentation for exact compatibility.
-
----
-
-## Development Standards
-
-SYNC Lab resources are built with an emphasis on:
-
-- Modular architecture
-- Low idle resource usage
-- Efficient event-driven systems
-- Server-side validation
-- Secure network events
-- Clean Lua architecture
-- React
-- TypeScript
-- Modern FiveM NUI development
-- Maintainable configuration
-- Consistent APIs
-- Production-ready code
+Check the individual repository or documentation for exact compatibility per product.
 
 ---
 
-## Open Source Resources
+## Repository Conventions
 
-Selected SYNC Lab resources are available publicly through this GitHub organization.
-
-Each public resource should provide appropriate:
-
-- Installation instructions
-- Configuration documentation
-- API documentation
-- Changelog
-- License
-- Support information
-
----
-
-## Premium Resources
-
-Premium SYNC Lab resources are distributed through official SYNC Lab channels.
-
-Commercial source code may not be publicly available in this organization.
-
----
-
-## Support
-
-Before requesting support:
-
-1. Read the available documentation.
-2. Search existing GitHub issues.
-3. Confirm you are running a supported resource version.
-4. Check both client and server console output.
-5. Open an issue only when the problem is relevant to the repository.
-
-General product support may be redirected to official SYNC Lab support channels.
+- Repository names use lowercase kebab-case: `sync-notify`, `sync-safezones`
+- FiveM resource names use underscores: `sync_notify`, `sync_safezones`
+- Commercial product names use title case: `SYNC Notify`, `SYNC SafeZones`
+- Versions live in Git tags — never in repository names
+- Paid source code is private by default
 
 ---
 
 ## Security
 
-Security vulnerabilities must not be disclosed through public GitHub issues.
+Security vulnerabilities must not be disclosed through public issues.
 
-Please read our [Security Policy](../SECURITY.md) for responsible disclosure guidance.
+Report vulnerabilities privately. See [SECURITY.md](../SECURITY.md).
 
 ---
 
 <div align="center">
-
-### SYNC Lab
 
 **Built for FiveM. Designed for production.**
 

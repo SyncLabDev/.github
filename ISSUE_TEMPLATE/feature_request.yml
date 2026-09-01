@@ -2,30 +2,40 @@ name: Feature Request
 description: Suggest an improvement or new feature for a SYNC Lab resource.
 title: "[FEATURE] "
 labels:
-  - enhancement
+  - "type: feature"
+  - "status: needs-triage"
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping improve SYNC Lab resources.
+        Describe the problem or limitation first, then your proposed solution.
+        Feature requests focused on a real use case are more likely to be considered.
 
-        Please explain the problem or limitation first, then describe your proposed solution.
-
-  - type: input
+  - type: dropdown
     id: resource
     attributes:
       label: Resource
-      description: Which SYNC Lab resource is this request for?
-      placeholder: sync-notify
+      description: Which SYNC Lab resource does this request apply to?
+      options:
+        - sync-notify
+        - sync-textui
+        - sync-hud
+        - sync-chat
+        - sync-loading-screen
+        - sync-reports
+        - sync-safezones
+        - sync-employment
+        - sync-character
+        - Other / Not listed
     validations:
       required: true
 
   - type: textarea
     id: problem
     attributes:
-      label: Problem
-      description: What problem or limitation are you trying to solve?
-      placeholder: Explain the current limitation.
+      label: Problem or Limitation
+      description: What problem or limitation does this feature solve?
+      placeholder: "Explain what is currently impossible or difficult to do."
     validations:
       required: true
 
@@ -40,8 +50,8 @@ body:
   - type: textarea
     id: use_case
     attributes:
-      label: FiveM Use Case
-      description: Explain how this feature would be used on a real FiveM server.
+      label: Real Use Case
+      description: Explain how this would be used on a real FiveM server.
     validations:
       required: true
 
@@ -49,28 +59,16 @@ body:
     id: alternatives
     attributes:
       label: Alternatives Considered
-      description: Describe any alternative solutions or workarounds you considered.
-
-  - type: dropdown
-    id: importance
-    attributes:
-      label: Importance
-      options:
-        - Nice to have
-        - Useful
-        - Important
-        - Critical for my use case
-    validations:
-      required: true
+      description: Any workarounds or alternative approaches you have tried.
 
   - type: checkboxes
     id: checklist
     attributes:
-      label: Checklist
+      label: Acknowledgements
       options:
-        - label: I searched existing issues and feature requests.
+        - label: I searched existing issues and feature requests before submitting.
           required: true
-        - label: This request relates to a SYNC Lab resource.
+        - label: This request is for a SYNC Lab resource.
           required: true
-        - label: I explained a real use case for the requested feature.
+        - label: I explained a real production use case for this feature.
           required: true

@@ -1,0 +1,34 @@
+# CODEOWNERS
+#
+# Controls which team members are required reviewers for changes to specific paths.
+#
+# Format: <path pattern>  <owner(s)>
+#
+# Owners must be real GitHub usernames or team slugs in the format:
+#   @username
+#   @SyncLabDev/team-slug
+#
+# Replace @SyncLabDev/maintainers with your actual username(s) or team slug.
+# Example: * @your-github-username
+#
+# If you have not yet created teams in GitHub, use individual usernames:
+#   * @username1 @username2
+#
+# ────────────────────────────────────────────────────────────────────────────
+# DEFAULT — all files require maintainer review
+# ────────────────────────────────────────────────────────────────────────────
+*                           @SyncLabDev/maintainers
+
+# ────────────────────────────────────────────────────────────────────────────
+# GOVERNANCE — issue templates, PR template, contributing, security
+# ────────────────────────────────────────────────────────────────────────────
+/.github/ISSUE_TEMPLATE/    @SyncLabDev/maintainers
+/.github/PULL_REQUEST_TEMPLATE.md @SyncLabDev/maintainers
+/CONTRIBUTING.md            @SyncLabDev/maintainers
+/SECURITY.md                @SyncLabDev/maintainers
+/CODE_OF_CONDUCT.md         @SyncLabDev/maintainers
+
+# ────────────────────────────────────────────────────────────────────────────
+# PROFILE
+# ────────────────────────────────────────────────────────────────────────────
+/profile/                   @SyncLabDev/maintainers

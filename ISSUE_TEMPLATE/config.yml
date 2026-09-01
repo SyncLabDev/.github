@@ -1,2 +1,11 @@
 blank_issues_enabled: false
-contact_links: []
+contact_links:
+  - name: Documentation
+    url: https://docs.synclab.dev
+    about: Installation guides, configuration reference, and API documentation.
+  - name: Product Support & Discord
+    url: https://discord.synclab.dev
+    about: General support, configuration help, and paid resource assistance.
+  - name: Report a Security Vulnerability
+    url: https://github.com/SyncLabDev/.github/blob/main/SECURITY.md
+    about: Security vulnerabilities must be reported privately. Read the Security Policy before disclosing.

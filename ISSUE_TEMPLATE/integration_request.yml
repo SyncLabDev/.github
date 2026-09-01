@@ -1,0 +1,119 @@
+name: Integration Request
+description: Request support for a new third-party resource integration or adapter.
+title: "[INTEGRATION] "
+labels:
+  - "type: integration"
+  - "status: needs-triage"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request a new adapter or integration with a third-party FiveM resource.
+
+        SYNC Lab uses adapter contracts — integrations are optional by design. Before requesting a new adapter,
+        confirm the resource cannot be supported through the existing `custom` adapter mode.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Integration Category
+      description: What capability category does this integration fall under?
+      options:
+        - inventory
+        - target
+        - appearance
+        - dispatch
+        - radio
+        - voice
+        - framework
+        - library
+        - database
+        - other
+    validations:
+      required: true
+
+  - type: input
+    id: resource_name
+    attributes:
+      label: Resource Name
+      description: The exact FiveM resource name as it appears in the manifest.
+      placeholder: "e.g. ox_inventory"
+    validations:
+      required: true
+
+  - type: input
+    id: resource_docs
+    attributes:
+      label: Resource Documentation
+      description: Link to the official documentation or repository.
+      placeholder: "https://..."
+    validations:
+      required: true
+
+  - type: input
+    id: resource_version
+    attributes:
+      label: Resource Version
+      description: The version you are testing against.
+      placeholder: "e.g. v2.0.0 or commit hash"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: sync_resource
+    attributes:
+      label: SYNC Lab Resource
+      description: Which SYNC Lab resource needs this integration?
+      options:
+        - sync-notify
+        - sync-textui
+        - sync-hud
+        - sync-chat
+        - sync-loading-screen
+        - sync-reports
+        - sync-safezones
+        - sync-employment
+        - sync-character
+        - Multiple / All
+        - Other / Not listed
+    validations:
+      required: true
+
+  - type: textarea
+    id: capabilities
+    attributes:
+      label: Required Capabilities
+      description: |
+        What capabilities or exports does the SYNC resource need from this third-party resource?
+        Be specific — list functions, events, or exports required.
+      placeholder: |
+        - exports['resource']:GetPlayerItems(source)
+        - exports['resource']:AddItem(source, item, count)
+    validations:
+      required: true
+
+  - type: textarea
+    id: why_custom_insufficient
+    attributes:
+      label: Why Is the Custom Adapter Insufficient?
+      description: Explain why the existing `custom` adapter mode cannot cover this use case.
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other relevant information, usage context, or community adoption notes.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Acknowledgements
+      options:
+        - label: I confirmed this resource is not already supported via an existing adapter.
+          required: true
+        - label: I have provided a link to official documentation or a public repository.
+          required: true
+        - label: I explained why the custom adapter mode is insufficient for this use case.
+          required: true

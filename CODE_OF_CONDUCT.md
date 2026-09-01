@@ -2,22 +2,19 @@
 
 SYNC Lab aims to maintain a professional, respectful, and productive development community.
 
-Everyone participating in our repositories, issues, pull requests, discussions, and related project spaces is expected to communicate constructively.
+Everyone participating in our repositories, issues, pull requests, discussions, and related spaces is expected to communicate constructively.
 
 ---
 
 ## Expected Behavior
 
-Participants should:
-
-- Communicate respectfully.
-- Keep discussions relevant and constructive.
-- Provide useful technical information when requesting help.
-- Respect different experience levels.
-- Give technical criticism without personal attacks.
-- Follow repository contribution guidelines.
-- Respect intellectual property and licensing terms.
-- Help maintain a productive development environment.
+- Communicate respectfully
+- Keep discussions relevant and technically focused
+- Provide useful information when requesting help
+- Give technical criticism without personal attacks
+- Respect different experience levels
+- Follow repository contribution guidelines
+- Respect intellectual property and licensing terms
 
 ---
 
@@ -25,16 +22,13 @@ Participants should:
 
 The following may result in moderation:
 
-- Harassment
-- Threats
-- Personal attacks
-- Hate speech
-- Spam
-- Deliberate misinformation
-- Publishing private information
+- Harassment, threats, or personal attacks
+- Hate speech or discrimination
+- Spam or deliberate misinformation
+- Publishing private information without consent
 - Malicious code submissions
-- Exploit distribution
-- Attempts to bypass licensing
+- Distribution of exploits or bypasses
+- Attempts to circumvent licensing or escrow protections
 - Deliberate disruption of project infrastructure
 - Repeated intentional violation of repository guidelines
 
@@ -45,12 +39,19 @@ The following may result in moderation:
 GitHub issues and discussions should remain focused on:
 
 - Reproducible bugs
-- Development
+- Feature development
 - Documentation
-- Feature requests
 - Repository-specific technical topics
 
-General FiveM server problems may be redirected to appropriate support channels.
+General FiveM server administration questions should be directed to appropriate support channels.
+
+---
+
+## Security
+
+Security vulnerabilities must not be discussed publicly in issues, discussions, or pull requests.
+
+See [SECURITY.md](../SECURITY.md) for responsible disclosure guidance.
 
 ---
 
@@ -59,16 +60,14 @@ General FiveM server problems may be redirected to appropriate support channels.
 SYNC Lab maintainers may take reasonable moderation actions including:
 
 - Editing or hiding inappropriate content
-- Closing discussions
-- Locking issues
+- Closing or locking issues and discussions
 - Rejecting contributions
-- Removing spam
 - Restricting participation
 
-when necessary to protect the project and community.
+when necessary to maintain a productive environment.
 
 ---
 
 ## Private Matters
 
-Moderation, security, or other sensitive matters should be handled through an appropriate private SYNC Lab communication channel rather than publicly posted.
+Moderation, security, or other sensitive matters should be handled through an appropriate private SYNC Lab channel rather than posted publicly.

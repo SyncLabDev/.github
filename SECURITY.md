@@ -1,107 +1,125 @@
 # SYNC Lab Security Policy
 
-Security is an important part of SYNC Lab development.
+---
 
-If you discover a vulnerability affecting a SYNC Lab resource, report it responsibly.
+## Report a Vulnerability Privately
+
+**Do not open a public GitHub issue for security vulnerabilities.**
+
+Public disclosure before a fix is available puts every production FiveM server running a SYNC Lab resource at risk.
+
+### How to report
+
+**Option 1 — GitHub Private Security Advisory (preferred)**
+
+Use GitHub's private advisory system for the affected repository:
+
+```
+https://github.com/SyncLabDev/<repository>/security/advisories/new
+```
+
+**Option 2 — Discord (private message)**
+
+Contact the SYNC Lab team privately via the official support Discord:
+
+```
+https://discord.synclab.dev
+```
+
+Send a private message to a maintainer. Do not post vulnerability details in any public channel.
 
 ---
 
-## Do Not Open Public Security Issues
+## What to Include in a Report
 
-Do not publicly disclose vulnerabilities involving:
-
-- Authentication bypass
-- Authorization bypass
-- Permission bypass
-- Network event exploitation
-- Item duplication
-- Money exploits
-- Database manipulation
-- Administrative privilege escalation
-- Remote code execution
-- Sensitive information exposure
-- Token or webhook exposure
-- Licensing bypasses
-- Other exploitable security weaknesses
-
-Public disclosure before a fix is available may put production FiveM servers at risk.
-
----
-
-## Reporting a Vulnerability
-
-Security vulnerabilities should be reported privately through an official SYNC Lab security or support channel.
-
-A report should include:
-
-- Affected resource
-- Resource version
+- Affected resource name and version
 - Vulnerability description
 - Reproduction steps
 - Potential impact
-- Relevant logs
-- Proof of concept when appropriate
-- Suggested mitigation when available
+- Relevant server/client console output
+- Proof of concept (if available)
+- Suggested mitigation (if known)
 
-Do not include credentials, personal data, or information belonging to other users or servers unless strictly necessary.
+Do not include:
+- Credentials or passwords belonging to other servers
+- Personal data of other users
+- Information beyond what is needed to reproduce the issue
 
 ---
 
 ## Supported Versions
 
-Security fixes are generally targeted at supported versions of SYNC Lab resources.
+Security fixes are applied to currently supported releases.
 
-Users should verify that they are running a supported version before reporting a vulnerability that may already have been resolved.
+| Resource | Supported |
+|---|---|
+| Latest stable release | ✅ Yes |
+| Previous minor release | ⚠️ Critical fixes only |
+| Older releases | ❌ Not supported |
+
+Update to the latest release before reporting a vulnerability that may already be resolved.
+
+---
+
+## What Qualifies as a Security Vulnerability
+
+Report issues involving:
+
+- Authentication or authorization bypass
+- Permission bypass or privilege escalation
+- Network event exploitation (spoofed events, forged payloads)
+- Item or money duplication exploits
+- Ownership bypass (vehicles, stashes, jobs, zones)
+- Database manipulation through untrusted input
+- SQL injection
+- Remote code execution or arbitrary server-side execution
+- Sensitive information disclosure (tokens, credentials, player data)
+- Rate-limit or cooldown bypass enabling abuse at scale
+- NUI-based authority escalation (client NUI granting server-side permissions)
+- Licensing or escrow bypass
 
 ---
 
 ## FiveM Security Model
 
-SYNC Lab follows this principle:
+SYNC Lab follows one principle:
 
 > **The client is untrusted.**
 
-Sensitive operations should be validated by the server.
+Clients submit intent. The server verifies, decides, and mutates state.
 
-Depending on the system, validation may include:
+The following are always treated as untrusted on the server:
 
-- Permissions
-- Player state
-- Position
-- Distance
-- Ownership
-- Inventory
-- Currency
-- Job
-- Entity state
-- Request frequency
-- Input type
-- Input range
-- Cooldowns
+- Client Lua execution context
+- NUI callbacks and JavaScript
+- Network event payloads
+- Client-reported coordinates
+- Client-reported prices, amounts, or permissions
+- Client-reported ownership or identity claims
+- Hidden or disabled UI controls
 
-Client-side checks may improve user experience, but they must not be treated as authoritative security controls.
+Client-side checks exist only for user experience — they are never the security boundary.
 
 ---
 
 ## Secrets and Credentials
 
-Never commit:
+Never commit to any repository:
 
-```text
-.env
+```
+.env files
 API keys
 Discord bot tokens
-webhooks
-database passwords
+Discord webhooks
+Database passwords or connection strings
 SSH private keys
-Tebex secrets
-license credentials
-production credentials
+Tebex secrets or license keys
+Production credentials of any kind
 ```
 
-If a secret is accidentally committed, assume it is compromised and rotate it immediately.
+If a secret is accidentally committed, assume it is compromised. Rotate it immediately.
 
-Removing a secret only from the latest commit is not sufficient if it already entered Git history.
+Removing a secret from the latest commit is not sufficient — it may already exist in Git history and must be purged using appropriate tooling.
 
 ---
 
@@ -109,10 +127,10 @@ Removing a secret only from the latest commit is not sufficient if it already en
 
 We ask security researchers to:
 
-- Give maintainers reasonable time to investigate and fix an issue.
-- Avoid accessing information that does not belong to them.
-- Avoid disrupting production systems.
-- Avoid publicly publishing exploitable details before remediation.
-- Provide enough information to reliably reproduce the vulnerability.
+- Allow maintainers reasonable time to investigate and patch before any public disclosure
+- Avoid accessing data that does not belong to them
+- Avoid disrupting production servers
+- Avoid publishing exploitable reproduction details before remediation
+- Provide sufficient information to reliably reproduce the issue
 
-Responsible security reports are appreciated.
+Security reports submitted in good faith are appreciated and handled with priority.
