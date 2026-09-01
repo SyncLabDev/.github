@@ -1,34 +1,23 @@
 # CODEOWNERS
 #
-# Controls which team members are required reviewers for changes to specific paths.
-#
-# Format: <path pattern>  <owner(s)>
-#
-# Owners must be real GitHub usernames or team slugs in the format:
-#   @username
-#   @SyncLabDev/team-slug
-#
-# Replace @SyncLabDev/maintainers with your actual username(s) or team slug.
-# Example: * @your-github-username
-#
-# If you have not yet created teams in GitHub, use individual usernames:
-#   * @username1 @username2
+# This file is in the root of the SyncLabDev/.github repository.
+# Paths are relative to this repository root — not to /.github/.
 #
 # ────────────────────────────────────────────────────────────────────────────
-# DEFAULT — all files require maintainer review
+# DEFAULT — all files
 # ────────────────────────────────────────────────────────────────────────────
-*                           @SyncLabDev/maintainers
+*                               @fr4gout
 
 # ────────────────────────────────────────────────────────────────────────────
-# GOVERNANCE — issue templates, PR template, contributing, security
+# GOVERNANCE
 # ────────────────────────────────────────────────────────────────────────────
-/.github/ISSUE_TEMPLATE/    @SyncLabDev/maintainers
-/.github/PULL_REQUEST_TEMPLATE.md @SyncLabDev/maintainers
-/CONTRIBUTING.md            @SyncLabDev/maintainers
-/SECURITY.md                @SyncLabDev/maintainers
-/CODE_OF_CONDUCT.md         @SyncLabDev/maintainers
+/ISSUE_TEMPLATE/                @fr4gout
+/PULL_REQUEST_TEMPLATE.md       @fr4gout
+/CONTRIBUTING.md                @fr4gout
+/SECURITY.md                    @fr4gout
+/CODE_OF_CONDUCT.md             @fr4gout
 
 # ────────────────────────────────────────────────────────────────────────────
 # PROFILE
 # ────────────────────────────────────────────────────────────────────────────
-/profile/                   @SyncLabDev/maintainers
+/profile/                       @fr4gout
