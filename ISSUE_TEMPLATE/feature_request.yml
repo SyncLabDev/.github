@@ -17,15 +17,12 @@ body:
       label: Resource
       description: Which SYNC Lab resource does this request apply to?
       options:
-        - sync-notify
-        - sync-textui
-        - sync-hud
-        - sync-chat
-        - sync-loading-screen
-        - sync-reports
-        - sync-safezones
-        - sync-employment
-        - sync-character
+        - SYNC HUD
+        - SYNC Reports
+        - SYNC Chat
+        - SYNC Notify
+        - SYNC TextUI
+        - "SYNC Loading: HORIZON"
         - Other / Not listed
     validations:
       required: true

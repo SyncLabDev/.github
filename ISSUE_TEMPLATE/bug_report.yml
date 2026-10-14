@@ -15,12 +15,19 @@ body:
         - The problem is consistently reproducible.
         - You have removed all secrets from logs before pasting.
 
-  - type: input
+  - type: dropdown
     id: resource
     attributes:
       label: SYNC Lab Resource
       description: Which SYNC Lab resource is affected?
-      placeholder: "sync-notify"
+      options:
+        - SYNC HUD
+        - SYNC Reports
+        - SYNC Chat
+        - SYNC Notify
+        - SYNC TextUI
+        - "SYNC Loading: HORIZON"
+        - Other / Not listed
     validations:
       required: true
 

@@ -22,9 +22,7 @@ https://github.com/SyncLabDev/<repository>/security/advisories/new
 
 Contact the SYNC Lab team privately via the official support Discord:
 
-```
-[https://discord.gg/Txj8xmCn7R]
-```
+[https://discord.gg/YjqfyxpVzM](https://discord.gg/YjqfyxpVzM)
 
 Send a private message to a maintainer. Do not post vulnerability details in any public channel.
 

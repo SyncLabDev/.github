@@ -51,7 +51,7 @@ General FiveM server administration questions should be directed to appropriate 
 
 Security vulnerabilities must not be discussed publicly in issues, discussions, or pull requests.
 
-See [SECURITY.md](../SECURITY.md) for responsible disclosure guidance.
+See [SECURITY.md](https://github.com/SyncLabDev/.github/blob/main/SECURITY.md) for responsible disclosure guidance.
 
 ---
 

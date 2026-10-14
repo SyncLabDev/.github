@@ -65,15 +65,12 @@ body:
       label: SYNC Lab Resource
       description: Which SYNC Lab resource needs this integration?
       options:
-        - sync-notify
-        - sync-textui
-        - sync-hud
-        - sync-chat
-        - sync-loading-screen
-        - sync-reports
-        - sync-safezones
-        - sync-employment
-        - sync-character
+        - SYNC HUD
+        - SYNC Reports
+        - SYNC Chat
+        - SYNC Notify
+        - SYNC TextUI
+        - "SYNC Loading: HORIZON"
         - Multiple / All
         - Other / Not listed
     validations:
